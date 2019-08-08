@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block content %}
+    <!-- HOME -->
+    <div id="home">
+        <!-- container -->
+        <div class="container">
+            <!-- home wrap -->
+            <div class="home-wrap">
+                <!-- home slick -->
+                <div id="home-slick">
+                    {% for banner in banners %}
+                        <!-- banner -->
+                        <div class="banner banner-1">
+                            {% thumbnail banner.image "1200x675" crop="center" as im %}
+                                <img src="{{ im.url }}">
+                            {% endthumbnail %}
+                            <div class="banner-caption text-center">
+                                <h1>{{ banner.title }}</h1>
+                                <h3 class="white-color font-weak">{{ banner.subtitle }}</h3>
+                                <a href="{{ banner.link }}" class="primary-btn">{{ banner.button }}</a>
+                            </div>
+                        </div>
+                        <!-- /banner -->
+                    {% endfor %}
+
+
+                    <!-- /banner -->
+                </div>
+                <!-- /home slick -->
+            </div>
+            <!-- /home wrap -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /HOME -->
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- section-title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2 class="title">Deals Of The Day</h2>
+                        <div class="pull-right">
+                            <div class="product-slick-dots-1 custom-dots"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /section-title -->
+
+                <!-- Product Slick -->
+                <div class="col-md-12 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <div id="product-slick-1" class="product-slick">
+                            {% for product in deals_of_the_day %}
+                                <!-- Product Single -->
+                                <div class="product product-single">
+                                    <div class="product-thumb">
+                                        <div class="product-label">
+                                            <span>New</span>
+                                            <span class="sale">-20%</span>
+                                        </div>
+                                        <ul class="product-countdown">
+                                            <li><span>00 H</span></li>
+                                            <li><span>00 M</span></li>
+                                            <li><span>00 S</span></li>
+                                        </ul>
+                                        <a href="{% url 'product_page' product.slug %}">
+                                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick
+                                                view
+                                            </button>
+                                        </a>
+                                        {% thumbnail product.image "270x360" crop="center" as im %}
+                                            <a href="{% url 'product_page' product.slug %}"><img src="{{ im.url }}"></a>
+                                        {% endthumbnail %}
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-price">NRS {{ product.price }}
+                                            {% if product.strike_price %}
+                                                <del class="product-old-price">NRS{{ product.strike_price }}</del>
+                                            {% endif %}
+                                        </h3>
+                                        <div class="product-rating">
+                                            {% for star in review.rating_range %}
+                                                <i class="fa fa-star"></i>
+                                            {% endfor %}
+                                            {% for star in review.empty_rating_range %}
+                                                <i class="fa fa-star-o empty"></i>
+                                            {% endfor %}
+                                        </div>
+                                        <h2 class="product-name"><a
+                                                href="{% url 'product_page' product.slug %}">{{ product.title }}</a>
+                                        </h2>
+                                        <div class="product-btns">
+                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i>
+                                                Add
+                                                to
+                                                Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Product Single -->
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product Slick -->
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- section title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2 class="title">Latest Products</h2>
+                    </div>
+                </div>
+                <!-- section title -->
+
+                <!-- Product Single -->
+                {% for latest_product in latest_products %}
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="product product-single">
+                            <div class="product-thumb">
+                                <button class="main-btn quick-view"><a
+                                        href="{% url 'product_page' latest_product.slug %}"><i
+                                        class="fa fa-search-plus"></i> Quick view</a></button>
+                                {% thumbnail latest_product.image "1200x675" crop="center" as im %}
+                                    <img src="{{ im.url }}">
+                                {% endthumbnail %}
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-price">{{ latest_product.price }}</h3>
+                                <div class="product-rating">
+                                    {% for star in review.rating_range %}
+                                        <i class="fa fa-star"></i>
+                                    {% endfor %}
+                                    {% for star in review.empty_rating_range %}
+                                        <i class="fa fa-star-o empty"></i>
+                                    {% endfor %}
+                                </div>
+                                <h2 class="product-name"><a
+                                        href="{% url 'product_page' latest_product.slug %}">{{ latest_product.title }}</a>
+                                </h2>
+                                <div class="product-btns">
+                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                    <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                    <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to
+                                        Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                <!-- /Product Single -->
+
+
+            </div>
+
+            <!-- /row -->
+
+            <!-- row -->
+            <div class="row">
+                <!-- section title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2 class="title">Picked For You</h2>
+                    </div>
+                </div>
+                <!-- section title -->
+
+                <!-- Product Single -->
+                {% for random_product in random_products %}
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="product product-single">
+                            <div class="product-thumb">
+                                <button class="main-btn quick-view"><a
+                                        href="{% url 'product_page' random_product.slug %}"><i
+                                        class="fa fa-search-plus"></i> Quick view</a></button>
+                                {% thumbnail random_product.image "1200x675" crop="center" as im %}
+                                    <img src="{{ im.url }}">
+                                {% endthumbnail %}
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-price">{{ random_product.price }}</h3>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o empty"></i>
+                                </div>
+                                <h2 class="product-name"><a
+                                        href="{% url 'product_page' random_product.slug %}">{{ random_product.title }}</a>
+                                </h2>
+                                <div class="product-btns">
+                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                    <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                    <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to
+                                        Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!-- /Product Single -->
+
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
